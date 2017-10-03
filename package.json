@@ -1,0 +1,26 @@
+{
+  "name": "pomodoro",
+  "version": "1.0.0",
+  "description": "25 on 5",
+  "main": "server.js",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.1",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dershao/Pomodoro.git"
+  },
+  "author": "me",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dershao/Pomodoro/issues"
+  },
+  "homepage": "https://github.com/dershao/Pomodoro#readme"
+}

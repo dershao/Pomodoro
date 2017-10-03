@@ -1,0 +1,31 @@
+* {
+	margin: 0px;
+}
+
+#navbar {
+	top: 0px;
+	left: 0px;
+	margin: 0;
+	padding: 0;
+	height: 100px;
+	background-color: rgb(246, 231, 174);
+
+}
+
+#content {
+	height: 100%;
+}
+
+#tasks {
+	height: 800px;
+	width: 50%;
+	float: left;
+	background-color: rgb(250, 244, 212)
+}
+
+#clock {
+	height: 800px;
+	width: 50%;
+	float: left;
+	background-color: rgb(250, 244, 212)
+}
