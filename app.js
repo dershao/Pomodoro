@@ -20,3 +20,4 @@ app.get('/', function(req, res) {
 app.get('/assets/style.css', function(req, res) {
 	res.sendFile(__dirname + '/assets/style.css');
 });
+
