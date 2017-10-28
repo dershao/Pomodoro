@@ -1,17 +1,18 @@
 var express = require('express');
-var tasksController = require('./controllers/tasksController')
+var taskController = require('./controllers/taskController');
 
 //express app
 var app = express();
 
-app.use(express.static("./public"));
-
+//template engine
 app.set('view engine', 'ejs');
 
-//listen to port number
-app.listen(3000);
-console.log("Listening to port 3000...");
+//static files
+app.use(express.static("./public"));
 
 //fire controllers
-tasksController(app);
+taskController(app);
 
+//listen to port number
+app.listen(5000);
+console.log("Listening to port 5000...");
