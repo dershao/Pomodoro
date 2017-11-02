@@ -7,30 +7,39 @@
 	left: 0px;
 	margin: 0;
 	padding: 0;
-	height: 100px;
+	height: 75px;
 	background-color: rgb(246, 231, 174);
 
 }
 
-#tasks {
-	height: 800px;
-	width: 50%;
-	float: left;
-	background-color: rgb(250, 244, 212)
-}
-
-#clock {
-	height: 800px;
-	width: 50%;
-	float: left;
-	background-color: rgb(250, 244, 212)
-}
-
-li {
+.task {
+	border: 5px solid red;
 	box-sizing: border-box;
 	width: 100%;
 }
 
-li:hover {
+.task:hover {
 	text-decoration: line-through;
+}
+
+#tasks {
+	list-style: none;
+}
+
+#task-list {
+	height: 660px;
+	width: 50%;
+	float: left;
+	background-color: rgb(250, 244, 212)
+}
+
+#task-container {
+	height: 400px;
+}
+
+#clock {
+	height: 660px;
+	width: 50%;
+	float: left;
+	background-color: rgb(250, 244, 212)
 }

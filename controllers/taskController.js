@@ -2,7 +2,10 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Task = require('../models/Task');
 
-mongoose.connect('mongodb://admin:admin@ds237855.mlab.com:37855/tasklist');
+//connect to mongodb database from mlab server
+mongoose.connect('mongodb://admin:admin@ds237855.mlab.com:37855/tasklist', {
+  useMongoClient: true
+});
 
 //middleware for parsing urls
 var urlencodedParser = bodyParser.urlencoded({extended: false});

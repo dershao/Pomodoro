@@ -21,13 +21,10 @@
       </form>
 
       <div id="task-container">
-        <% for (var i=0; i < tasks.length; i++) { %>
-          <div class="task"><%= tasks[i].item %></div>
+        <% for (var i=0; i < homes.length; i++) { %>
+          <div class="task"><%= homes[i].item %></div>
         <% } %>
       </div>
-
-      <button id="start">Start Task</button>
-      <button id="stop">Stop Task</button>
 		</div>
 
 		<div id="clock">

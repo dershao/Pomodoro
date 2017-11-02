@@ -18,7 +18,7 @@ $(document).ready(function(){
       return false;
   });
 
-  $('li').on('click', function(){
+  $('.task').on('click', function(){
       var item = $(this).text().replace(/ /g, "-");
       $.ajax({
         type: 'DELETE',
