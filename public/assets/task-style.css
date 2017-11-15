@@ -1,0 +1,49 @@
+* {
+  background-color: rgb(246, 231, 174);
+}
+
+#navbar {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(246, 231, 174);
+}
+
+#delete-button {
+  margin-left: 10px;
+  margin-top: 25px;
+  float: right;
+}
+
+#back-button {
+  margin-left: 10px;
+  margin-top: 25px;
+  float: left;
+}
+
+.break {
+  height: 10px;
+}
+
+#start-button {
+  float: left;
+}
+
+#stop-button {
+  float: right;
+}
+
+#header > h1 {
+  text-align: center;
+}
+
+#center {
+
+}
+
+#bottom {
+
+}
+
+#footer {
+
+}
