@@ -3,36 +3,38 @@
   <head>
     <meta charset="utf-8">
     <title>Pomodoro - Task List</title>
-    <link rel="stylesheet" type="text/css" href="/assets/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/task-style.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="/assets/task-list.js" type="text/javascript"></script>
+    <script src="/assets/task-display.js" type="text/javascript"></script>
     <script src="/assets/interface.js" type="text/javascript"></script>
   </head>
   <body>
     <nav id="navbar">
-
+      <button id="back-button">Back</button>
+      <button id="delete-button">Delete</button>
 		</nav>
 
-		<div id="task-list">
+    <div id="header">
+      <h1>Currently on task: <%= tasks %></h1>
+    </div>
 
-      <form>
-        <input type="text" name="task" placeholder="Add a new task..." required/>
-        <button type="submit">Add Task</button>
-      </form>
+    <div class="break"></div>
+    <div class="break"></div>
 
-      <div id="task-container">
-        <% for (var i=0; i < tasks.length; i++) { %>
-          <div class="task"><%= tasks[i].item %></div>
-        <% } %>
-      </div>
+    <div id="center">
+      <button id="start-button">Start Task</button>
+      <button id="stop-button">Stop Task</button>
+    </div>
 
-      <button id="start">Start Task</button>
-      <button id="stop">Stop Task</button>
-		</div>
+    <div class="break"></div>
+    <div class="break"></div>
 
-		<div id="clock">
-			Pretend we have a clock here.
-		</div>
+    <div id="bottom">
+      <div id="pomodoro"></div>
+    </div>
+
+    <div id="footer">
+    </div>
 
   </body>
 </html>

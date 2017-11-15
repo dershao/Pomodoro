@@ -19,14 +19,16 @@ $(document).ready(function(){
   });
 
   $('.task').on('click', function(){
-      var item = $(this).text().replace(/ /g, "-");
-      $.ajax({
-        type: 'DELETE',
-        url: '/' + item,
-        success: function(data){
 
-          location.reload();
-        }
-      });
+      var item = $(this).text();
+      // $.ajax({
+      //   type: 'GET',
+      //   url: '/task/' + item,
+      //   success: function(data) {
+      //
+      //   }
+      // });
+
+      $.get( "/task/"+item );
   });
 });
