@@ -1,0 +1,50 @@
+* {
+	margin: 0px;
+}
+
+#navbar {
+	top: 0px;
+	left: 0px;
+	margin: 0;
+	padding: 0;
+	height: 75px;
+	background-color: rgb(246, 231, 174);
+
+}
+
+#task-container {
+	height: 660px;
+	width: 100%;
+	background-color: rgb(250, 244, 212);
+}
+
+form {
+	margin: 0 auto;
+	width: 400px;
+}
+
+form input {
+	margin-left: 100px;
+	float: left;
+	width: 200px;
+}
+
+form button {
+	width: 75px;
+	margin-left: 160px;
+}
+
+#task-list {
+	margin: 0 auto;
+	width: 50%;
+	background-color: rgb(246, 231, 174);
+}
+
+.task {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.task:hover {
+	text-decoration: line-through;
+}

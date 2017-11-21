@@ -6,6 +6,8 @@ mongoose.connect('mongodb://admin:admin@ds237855.mlab.com:37855/tasklist', {
   useMongoClient: true
 });
 
+mongoose.Promise = require('bluebird');
+
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = function(app) {
@@ -27,11 +29,10 @@ module.exports = function(app) {
   });
 
   //deletes selected task
-  app.delete('/:item' , function(req, res) {
-    Task.find({item: req.params.item.replace(/\-/g, " ")})
-      .remove(function(err, data) {
-        if (err) throw err;
-        res.json(data);
+  app.delete('/:item', function(req, res) {
+    Task.find({item: req.params.item.replace(/\-/g, " ")}).remove(function(err, data) {
+      if (err) throw err;
+      res.json(data);
     });
   });
 
