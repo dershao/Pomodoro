@@ -9,10 +9,9 @@
 	padding: 0;
 	height: 75px;
 	background-color: rgb(246, 231, 174);
-
 }
 
-#task-container {
+#container {
 	height: 660px;
 	width: 100%;
 	background-color: rgb(250, 244, 212);
@@ -20,13 +19,13 @@
 
 form {
 	margin: 0 auto;
-	width: 400px;
+	width: 50%;
 }
 
 form input {
-	margin-left: 100px;
-	float: left;
-	width: 200px;
+	display: inline-block;
+	height: 50px;
+	width: 48%;
 }
 
 form button {
@@ -37,14 +36,25 @@ form button {
 #task-list {
 	margin: 0 auto;
 	width: 50%;
-	background-color: rgb(246, 231, 174);
 }
 
-.task {
-	box-sizing: border-box;
+#task-container {
 	width: 100%;
 }
 
-.task:hover {
+.task {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 20px;
+	margin-top: 10px;
+	background-color: rgb(246, 231, 174);
+}
+
+.task-name {
+	display: inline-block;
+	width: 80%;
+}
+
+.task-name:hover {
 	text-decoration: line-through;
 }
