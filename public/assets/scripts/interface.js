@@ -1,10 +1,10 @@
 $(document).ready(function() {
 
-  $("#start").on('click', function() {
+  $("#start-button").on('click', function() {
 
-      $("#navbar").css('background-color', '#FF2400');
-      $("#tasks").css('background-color', '#F08080');
-      $("#clock").css('background-color', '#F08080');
+      $("#navbar").css('background-color', '#000000');
+      $("#container").css('background-color', '#585858');
+      $(".task").css('background-color', '#585858');
   });
 
   $("#stop").on('click', function() {

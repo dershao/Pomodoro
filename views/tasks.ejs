@@ -5,18 +5,17 @@
     <title>Pomodoro - Task List</title>
     <link rel="stylesheet" type="text/css" href="/assets/task-style.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="/assets/scripts/task-display.js" type="text/javascript"></script>
-    <script src="/assets/scripts/interface.js" type="text/javascript"></script>
+    <script src="/assets/task-display.js" type="text/javascript"></script>
+    <script src="/assets/interface.js" type="text/javascript"></script>
   </head>
   <body>
     <nav id="navbar">
       <button id="back-button">Back</button>
-      <button id="delete-button" href="/">Delete</button>
+      <button id="delete-button">Delete</button>
 		</nav>
 
     <div id="header">
-      <h1>Currently on task: </h1>
-      <h1 id="current-task"><%= task %></h1>
+      <h1>Currently on task: <%= tasks %></h1>
     </div>
 
     <div class="break"></div>
@@ -26,9 +25,6 @@
       <button id="start-button">Start Task</button>
       <button id="stop-button">Stop Task</button>
     </div>
-
-    <div class="break"></div>
-    <div class="break"></div>
 
     <div id="bottom">
       <div id="pomodoro"></div>

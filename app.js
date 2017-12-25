@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var taskController = require('./controllers/taskController');
 var homeController = require('./controllers/homeController');
 
-
+//port numbere
+const PORT = process.env.PORT || 5000;
 
 //express app
 var app = express();
@@ -19,5 +20,5 @@ taskController(app);
 homeController(app);
 
 //listen to port number
-app.listen(5000);
-console.log("Listening to port 5000...");
+app.listen(PORT);
+console.log("Listening to port %s...",  PORT);

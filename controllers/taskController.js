@@ -12,11 +12,23 @@ module.exports = function(app) {
         if (err) throw err;
         if (data === null) {
           res.status(404);
-          res.send('404: Not Found');
+          res.send('No task found named: ' + req.params.item);
         }
         else {
-          res.render('tasks', {task: req.params.item});
+          res.render('tasks', {task: data.item});
         }
+    });
+  });
+
+  app.get('/task/data/:item', function(req, res) {
+    Task.findOne({'item': req.params.item}, function(err, data) {
+      if (err) throw err;
+      if (data == null) {
+        return;
+      }
+      else {
+        res.json(data);
+      }
     });
   });
 

@@ -1,6 +1,9 @@
 {
   "name": "pomodoro",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.10.1"
+  },
   "description": "pomodoro",
   "main": "app.js",
   "dependencies": {
