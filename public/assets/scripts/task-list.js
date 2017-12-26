@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  var onTask = false;
+
   $('form').on('submit', function() {
 
       var item = $('#task-input');
@@ -34,4 +36,34 @@ $(document).ready(function() {
       });
   });
 
+  $('.start-button').on('click', function() {
+
+    var buttons = document.querySelectorAll('.start-button');
+
+    if (onTask === false) {
+
+      $(this).html("Stop Task");
+
+      for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i] !== this) {
+          //prevent other tasks from starting while current task is on
+          buttons[i].disabled = true;
+        }
+      }
+
+      onTask = true;
+    }
+    else {
+
+      $(this).html("Start Task");
+
+      for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i] !== this) {
+          //re-enable all other start tasks
+          buttons[i].disabled = false;
+        }
+      }
+      onTask = false;
+    }
+  });
 });
