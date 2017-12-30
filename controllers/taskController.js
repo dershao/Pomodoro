@@ -34,6 +34,18 @@ module.exports = function(app) {
     });
   });
 
+  app.put('/task/:item', urlencodedParser, function(req, res) {
+    Task.findOneAndUpdate({item: req.params.item}, {$inc: {complete: 1} }, {new: true}, function(err, data) {
+      if (err) {
+        res.status(500);
+        console.log("Something went wrong when updating database");
+      }
+      else {
+        res.json(data);
+      }
+    });
+  });
+
   app.delete('/task/:item', function(req, res) {
     Task.find({item: req.params.item.replace(/\-/g, " ")})
       .remove(function(err, data) {
