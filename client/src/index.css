@@ -1,0 +1,36 @@
+body {
+  background-color: rgb(246, 231, 174);
+}
+
+.Navbar {
+  text-align: center;
+  /* border: 2px solid black; */
+  margin: auto;
+}
+
+.Timer {
+  font-size: 60px;
+}
+
+.ProgressBar {
+  width: 100%;
+  /* border: 2px solid black; */
+  height: 20px;
+	background-color: rgb(221, 221, 221);
+}
+
+.Form {
+  text-align: center;
+  margin: auto;
+  width:50%
+}
+
+.Form input {
+  height: 50px;
+  width: 48%;
+}
+
+#submit-button {
+  position: absolute;
+  left: -9999px;
+}
