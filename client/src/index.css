@@ -1,11 +1,6 @@
 body {
   background-color: rgb(246, 231, 174);
-}
-
-.Navbar {
   text-align: center;
-  /* border: 2px solid black; */
-  margin: auto;
 }
 
 .Timer {
