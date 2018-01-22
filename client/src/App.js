@@ -71,20 +71,50 @@ class ProgressBar extends Component {
   }
 }
 
-class Form extends Component {
+ function Form(props) {
+  return (
+    <div className="Form">
+      <form onSubmit={props.onSubmit}>
+        <input type="text" name="task" value={props.task}
+        placeholder="Add a new task..." onChange={props.onChange} />
+        <input type="number" name="time" value={props.time}
+        placeholder="Work intervals..." onChange={props.onChange} />
+        <input id="submit-button" type="submit" value="Submit"/>
+      </form>
+    </div>
+  );
+}
+
+function TaskList(props) {
+  const tasks = props.tasks;
+  const taskList = tasks.map((task) => {
+    return (
+      <div>{task}
+        <button type="button" id="start-button" onClick={props.onClick}>
+          Start Task
+        </button>
+      </div>
+    );
+  });
+
+  return <ul>{taskList}</ul>;
+}
+
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      placeholderTask: 'Add a new task...',
-      placeholderTime: 'Work intervals...',
       task: '',
       time: '',
+      clockStart: false,
+      tasks: [],
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-}
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   handleSubmit(event) {
     if(!this.state.task || !this.state.time)
@@ -104,40 +134,7 @@ class Form extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  render() {
-    return (
-      <div className="Form">
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" name="task" value={this.state.task}
-          placeholder={this.state.placeholderTask} onChange={this.handleChange} />
-          <input type="number" name="time" value={this.state.time}
-          placeholder={this.state.placeholderTime} onChange={this.handleChange} />
-          <input id="submit-button" type="submit" value="Submit"/>
-        </form>
-      </div>
-    );
-  }
-}
-
-function TaskList(props) {
-  const tasks = props.tasks;
-  const taskList = tasks.map((task) => <li>{task}</li>);
-
-  return <ul>{taskList}</ul>;
-}
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      clockStart: false,
-    };
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick(event) {
     this.setState({clockStart: this.state.clockStart ? false : true});
   }
 
@@ -147,8 +144,10 @@ class App extends Component {
         <h1>Pomodoro</h1>
         <Timer start={this.state.clockStart}/>
         <ProgressBar />
-        <Form />
-        
+        <Form onSubmit={this.handleSubmit} onChange={this.handleChange}
+        task={this.state.task} time={this.state.time} />
+        <TaskList tasks={this.state.tasks} onClick={this.handleClick}
+        start={this.state.clockStart} />
       </div>
     );
   }
