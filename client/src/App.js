@@ -22,6 +22,13 @@ class Clock extends Component {
       minutes--;
     }
 
+    if(minutes === -1 && seconds === 59)
+    {
+      clearInterval(this.clock);
+      minutes = 25;
+      seconds = 0;
+      this.props.timerFinished();
+    }
     this.setState({minutes: minutes, seconds: seconds});
   }
 
@@ -56,7 +63,7 @@ class Timer extends Component {
   render() {
     return (
       <div className="Timer">
-        {this.props.start ? <Clock /> : <div>25:00</div>}
+        {this.props.start ? <Clock timerFinished={this.props.timerFinished}/> : <div>25:00</div>}
       </div>
     );
   }
@@ -85,6 +92,10 @@ class ProgressBar extends Component {
   );
 }
 
+function TaskButton(props) {
+
+}
+
 function TaskList(props) {
   const tasks = props.tasks;
   const taskList = tasks.map((task) => {
@@ -107,13 +118,26 @@ class App extends Component {
     this.state = {
       task: '',
       time: '',
-      clockStart: false,
+      timerStart: false,
       tasks: [],
+      numTasks: 0,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.timerFinished = this.timerFinished.bind(this);
+  }
+
+  componentDidMount() {
+    fetch('/')
+      .then((res) => res.json())
+      .then(function(data) {
+        console.log(data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   handleSubmit(event) {
@@ -125,7 +149,9 @@ class App extends Component {
 
     const tasks = this.state.tasks;
     const task = this.state.task;
-    this.setState({tasks: tasks.concat([task])});
+    const numTasks = this.state.numTasks;
+    this.setState({tasks: tasks.concat([task]), numTasks: numTasks + 1});
+
     // TODO: POST to server
     event.preventDefault();
   }
@@ -135,19 +161,24 @@ class App extends Component {
   }
 
   handleClick(event) {
-    this.setState({clockStart: this.state.clockStart ? false : true});
+    this.setState({timerStart: this.state.timerStart ? false : true});
+  }
+
+  timerFinished() {
+    this.setState({timerStart: false});
+    alert("25 Minutes Completed");
   }
 
   render() {
     return (
       <div className="App">
         <h1>Pomodoro</h1>
-        <Timer start={this.state.clockStart}/>
+        <Timer start={this.state.timerStart} timerFinished={this.timerFinished}
+        />
         <ProgressBar />
         <Form onSubmit={this.handleSubmit} onChange={this.handleChange}
         task={this.state.task} time={this.state.time} />
-        <TaskList tasks={this.state.tasks} onClick={this.handleClick}
-        start={this.state.clockStart} />
+        <TaskList tasks={this.state.tasks} onClick={this.handleClick} />
       </div>
     );
   }

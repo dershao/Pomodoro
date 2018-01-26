@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var Task = require('../models/Task');
 
 /*Temporary for testing users*/
-var User = require('../models/User');
+//var User = require('../models/User');
 
 mongoose.connect('mongodb://admin:admin@ds237855.mlab.com:37855/tasklist', {
   useMongoClient: true
@@ -17,10 +17,11 @@ module.exports = function(app) {
 
   //home page, displays all tasks currently stored
   app.get('/', function(req, res) {
-    Task.find({}, function(err, data) {
+    /*Task.find({}, function(err, data) {
       if (err) throw err;
       res.json(data);
-    });
+    });*/
+    res.json([{task: "task", count: "count"}]);
   });
 
   //get new task and store in it database
