@@ -78,7 +78,7 @@ class ProgressBar extends Component {
   }
 }
 
- function Form(props) {
+ function TaskInput(props) {
   return (
     <div className="Form">
       <form onSubmit={props.onSubmit}>
@@ -134,7 +134,7 @@ class App extends Component {
     var getDataReq = new XMLHttpRequest();
     getDataReq.onreadystatechange = function() {
       if (getDataReq.readyState == XMLHttpRequest.DONE) {
-        alert(getDataReq.responseText);
+        console.log(getDataReq.responseText);
       }
     }
     getDataReq.open("GET", "http://localhost:5000/");
@@ -191,7 +191,7 @@ class App extends Component {
         <Timer start={this.state.timerStart} timerFinished={this.timerFinished}
         />
         <ProgressBar />
-        <Form onSubmit={this.handleSubmit} onChange={this.handleChange}
+        <TaskInput onSubmit={this.handleSubmit} onChange={this.handleChange}
         task={this.state.task} time={this.state.time} />
         <TaskList tasks={this.state.tasks} onClick={this.handleClick} />
       </div>
