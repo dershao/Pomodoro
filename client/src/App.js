@@ -128,16 +128,31 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.timerFinished = this.timerFinished.bind(this);
   }
-
   componentDidMount() {
-    fetch('/')
-      .then((res) => res.json())
+
+    //using XHR request instead - fetch appears to be bugged
+    var getDataReq = new XMLHttpRequest();
+    getDataReq.onreadystatechange = function() {
+      if (getDataReq.readyState == XMLHttpRequest.DONE) {
+        alert(getDataReq.responseText);
+      }
+    }
+    getDataReq.open("GET", "http://localhost:5000/");
+    getDataReq.send();
+
+    //fetch API is bugged - gives you a TypeError https://github.com/github/fetch/issues/310
+    /*
+    fetch('http://localhost:5000/')
+      .then(function(res) {
+        console.log(res.json());
+        console.log(res.text());
+      })
       .then(function(data) {
         console.log(data);
       })
       .catch(function(error) {
         console.log(error);
-      });
+      });*/
   }
 
   handleSubmit(event) {
