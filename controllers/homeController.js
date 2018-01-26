@@ -2,6 +2,9 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Task = require('../models/Task');
 
+/*Temporary for testing users*/
+var User = require('../models/User');
+
 mongoose.connect('mongodb://admin:admin@ds237855.mlab.com:37855/tasklist', {
   useMongoClient: true
 });
@@ -16,7 +19,7 @@ module.exports = function(app) {
   app.get('/', function(req, res) {
     Task.find({}, function(err, data) {
       if (err) throw err;
-      res.render('home', {tasks: data});
+      res.json(data);
     });
   });
 
@@ -33,6 +36,22 @@ module.exports = function(app) {
     Task.find({item: req.params.item.replace(/\-/g, " ")}).remove(function(err, data) {
       if (err) throw err;
       res.json(data);
+    });
+  });
+
+  /*Temporary: testing register users*/
+  app.post('/register', urlencodedParser, function(req, res) {
+    console.log("we posting now.")
+    var userData = {
+      username: req.body.username,
+      password: req.body.password
+    }
+
+    console.log(userData);
+
+    User(req.body).save(function(err, data) {
+      if (err) throw err;
+      res.redirect('/');
     });
   });
 }
