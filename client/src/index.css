@@ -1,11 +1,6 @@
 body {
   background-color: rgb(246, 231, 174);
-}
-
-.Navbar {
   text-align: center;
-  /* border: 2px solid black; */
-  margin: auto;
 }
 
 .Timer {
@@ -33,4 +28,8 @@ body {
 #submit-button {
   position: absolute;
   left: -9999px;
+}
+
+#start-button {
+  margin: 0px 0px 0px 100px;
 }
