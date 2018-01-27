@@ -17,12 +17,17 @@ module.exports = function(app) {
 
   //home page, displays all tasks currently stored
   app.get('/', function(req, res) {
-    /*Task.find({}, function(err, data) {
+    Task.find({}, function(err, data) {
       if (err) throw err;
       res.json(data);
-    });*/
-    res.json([{task: "task", count: "count"}]);
+    });
   });
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
   //get new task and store in it database
   app.post('/', urlencodedParser, function(req, res) {
