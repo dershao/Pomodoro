@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './index.css';
+import $ from 'jquery';
 
 class Clock extends Component {
   constructor(props) {
@@ -98,17 +99,17 @@ function TaskButton(props) {
 
 function TaskList(props) {
   const tasks = props.tasks;
-  const taskList = tasks.map((task) => {
+  const taskList = tasks.map((task, index) => {
     return (
-      <div>{task}
+      <li key={index}>{task.item}
         <button type="button" id="start-button" onClick={props.onClick}>
           Start Task
         </button>
-      </div>
+      </li>
     );
   });
 
-  return <ul>{taskList}</ul>;
+  return <div id="tasklist">{taskList}</div>;
 }
 
 class App extends Component {
@@ -129,30 +130,13 @@ class App extends Component {
     this.timerFinished = this.timerFinished.bind(this);
   }
   componentDidMount() {
-
-    //using XHR request instead - fetch appears to be bugged
-    var getDataReq = new XMLHttpRequest();
-    getDataReq.onreadystatechange = function() {
-      if (getDataReq.readyState == XMLHttpRequest.DONE) {
-        console.log(getDataReq.responseText);
-      }
-    }
-    getDataReq.open("GET", "http://localhost:5000/");
-    getDataReq.send();
-
-    //fetch API is bugged - gives you a TypeError https://github.com/github/fetch/issues/310
-    /*
-    fetch('http://localhost:5000/')
-      .then(function(res) {
-        console.log(res.json());
-        console.log(res.text());
-      })
-      .then(function(data) {
-        console.log(data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });*/
+    $.ajax({
+        dataType: "json",
+        url: "http://localhost:5000",
+        success: function(data) {
+          this.setState({tasks: data});
+      }.bind(this),
+    });
   }
 
   handleSubmit(event) {
@@ -165,7 +149,6 @@ class App extends Component {
     const tasks = this.state.tasks;
     const task = this.state.task;
     const numTasks = this.state.numTasks;
-    this.setState({tasks: tasks.concat([task]), numTasks: numTasks + 1});
 
     // TODO: POST to server
     event.preventDefault();

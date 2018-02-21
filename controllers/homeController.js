@@ -15,6 +15,12 @@ var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = function(app) {
 
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
   //home page, displays all tasks currently stored
   app.get('/', function(req, res) {
     Task.find({}, function(err, data) {
@@ -22,12 +28,6 @@ module.exports = function(app) {
       res.json(data);
     });
   });
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
   //get new task and store in it database
   app.post('/', urlencodedParser, function(req, res) {

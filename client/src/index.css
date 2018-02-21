@@ -17,7 +17,8 @@ body {
 .Form {
   text-align: center;
   margin: auto;
-  width:50%
+  width:50%;
+  margin-bottom: 2em;
 }
 
 .Form input {
@@ -32,4 +33,15 @@ body {
 
 #start-button {
   margin: 0px 0px 0px 100px;
+}
+
+li {
+  list-style-type: none;
+  margin-right: 6em;
+}
+
+#tasklist {
+  text-align: right;
+  width: 50%;
+  margin: auto;
 }
