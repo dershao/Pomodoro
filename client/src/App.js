@@ -93,17 +93,13 @@ class ProgressBar extends Component {
   );
 }
 
-function TaskButton(props) {
-
-}
-
 function TaskList(props) {
   const tasks = props.tasks;
   const taskList = tasks.map((task, index) => {
     return (
       <li key={index}>{task.item}
-        <button type="button" id="start-button" onClick={props.onClick}>
-          Start Task
+        <button type="button" id="start-button" name={task.item} onClick={props.onClick}>
+          {task.inProgress ? "Stop Task" : "Start Task"}
         </button>
       </li>
     );
@@ -134,7 +130,23 @@ class App extends Component {
         dataType: "json",
         url: "http://localhost:5000",
         success: function(data) {
-          this.setState({tasks: data});
+          let taskList = [];
+
+          data.forEach(function(task) {
+            if(task.item)
+            {
+              taskList.push(task);
+            }
+          });
+
+          // Adds one more field to each task
+
+          taskList.forEach(function(task) {
+            task.inProgress = false;
+          });
+
+          this.setState({tasks: taskList});
+
       }.bind(this),
     });
   }
@@ -148,7 +160,6 @@ class App extends Component {
 
     const tasks = this.state.tasks;
     const task = this.state.task;
-    const numTasks = this.state.numTasks;
 
     // TODO: POST to server
     event.preventDefault();
@@ -159,6 +170,18 @@ class App extends Component {
   }
 
   handleClick(event) {
+    const taskList = this.state.tasks;
+
+    alert(event.target.name);
+
+    for(let i = 0; i < taskList.length; i++)
+    {
+      if(taskList[i].item === event.target.name)
+      {
+        taskList[i].inProgress = taskList[i].inProgress ? false : true;
+        break;
+      }
+    }
     this.setState({timerStart: this.state.timerStart ? false : true});
   }
 
