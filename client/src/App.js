@@ -118,6 +118,7 @@ class App extends Component {
       timerStart: false,
       tasks: [],
       numTasks: 0,
+      taskInProgress: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -172,17 +173,32 @@ class App extends Component {
   handleClick(event) {
     const taskList = this.state.tasks;
 
-    alert(event.target.name);
-
     for(let i = 0; i < taskList.length; i++)
     {
       if(taskList[i].item === event.target.name)
       {
-        taskList[i].inProgress = taskList[i].inProgress ? false : true;
-        break;
+        // End a task
+        if(this.state.taskInProgress)
+        {
+          if(taskList[i].inProgress)
+          {
+            taskList[i].inProgress = false;
+            this.setState({tasks: taskList, taskInProgress: false, timerStart: false});
+            return;
+          }
+          else
+          {
+            return;
+          }
+        }
+        // Start a task
+        else
+        {
+          taskList[i].inProgress = true;
+          this.setState({tasks: taskList, taskInProgress: true, timerStart: true});
+        }
       }
     }
-    this.setState({timerStart: this.state.timerStart ? false : true});
   }
 
   timerFinished() {
