@@ -2,7 +2,9 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Task = require('../models/Task');
 
-/* mLab database connection omitted */
+mongoose.connect(process.env.MONGO_DB, {
+  useMongoClient: true
+});
 
 mongoose.Promise = require('bluebird');
 
