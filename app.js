@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var taskController = require('./controllers/taskController');
 var homeController = require('./controllers/homeController');
 
-//port numbere
+//port number
 const PORT = process.env.PORT || 5000;
 
 //express app
