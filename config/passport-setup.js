@@ -1,6 +1,10 @@
+/**
+ * Passport setup for Google. 
+ */
+
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
-const keys = require('./keys');
+const keys = require('./keys.js');
 const User = require('../models/user-model.js');
 
 //take a piece of information to identify the user and put it into a cookie
@@ -21,7 +25,7 @@ passport.use(
   //options for strategy
   //after permission is granted, need a callback url to redirect
   callbackURL: '/auth/google/redirect',
-  clientID: keys.google.clientID,
+  clientID: keys.google.clientID, 
   clientSecret: keys.google.clientSecret
 }, (accessToken, refreshToken, profile, done) => {
     //passport callback function

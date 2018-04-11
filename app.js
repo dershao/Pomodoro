@@ -1,19 +1,26 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var taskController = require('./controllers/taskController');
-var homeController = require('./controllers/homeController');
+const express = require('express');
+const mongoose = require('mongoose');
+const taskController = require('./controllers/taskController');
+const homeController = require('./controllers/homeController');
+const auth = require('./routes/authRouter.js');
+
+/* requiring will run the code in the passport-setup.js - we can now use authentication strategy 'google' */
+const passportSetup = require('./config/passport-setup');
 
 //port number
 const PORT = process.env.PORT || 5000;
 
 //express app
-var app = express();
+const app = express();
 
 //template engine
 app.set('view engine', 'ejs');
 
-//static files
+//use static files at specified directory
 app.use(express.static("./public"));
+
+//use authentication routes
+app.use('/auth', auth);
 
 //fire controllers
 taskController(app);
