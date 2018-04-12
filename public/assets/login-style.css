@@ -39,7 +39,7 @@ input {
 }
 
 .btn-google {
-    margin: 25px;
+    margin-bottom: 1em;
     width: 80%;
     min-width: 184px;
     max-width: 184px;
