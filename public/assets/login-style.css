@@ -10,8 +10,8 @@
 
 #form-wrapper {
 	margin: 0 auto;
-	width: 40em;
-	padding-top: 5em;
+	width: 50em;
+	padding-top: 4em;
 	padding-bottom: 4em;
 	position: relative;
 }
@@ -21,11 +21,32 @@
 	width: 50%;
 }
 
-.form-input {
+.form-element {
 	margin-bottom: 1em;
 }
 
-label {
+.form-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#title-wrapper {
+    padding-top: 1em;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#title-wrapper #title-header {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#title-header #title-text {
+    text-align: center;
+    display: inline-block;
+}
+
+.form-element label {
 	display: inline-block;
 	font-family: 'Roboto';
 	margin-bottom: 4px;
@@ -38,8 +59,36 @@ input {
 	border: 1px solid #C3C0C7;
 }
 
-.btn-google {
-    margin-bottom: 1em;
+.form-button {
+    padding-top: 1em;   
+    width: 100%;
+}
+
+.form-button div {
+    font-family: 'Roboto';
+    text-align: center;
+    padding-top: 1em;
+}
+
+.form-button #loginbtn {
+    margin: 0 auto;
+}
+
+.form-button input {
+    cursor: pointer;
+    transition: all 400ms ease 0s;
+    user-select: none
+}
+
+.form-button input:hover {
+    box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
+}
+
+#third-party-login-buttons {
+    margin-bottom: 2em;
+}
+
+#third-party-login-buttons .btn-google {
     width: 80%;
     min-width: 184px;
     max-width: 184px;
@@ -53,8 +102,10 @@ input {
     user-select: none;
     transition: all 400ms ease 0s;
     display: flex;
+    margin: 0 auto;  
 }
-.btn-google .google-icon-wrapper {
+
+#third-party-login-buttons .btn-google .google-icon-wrapper {
     position: absolute;
     margin-top: 1px;
     margin-left: 1px;
@@ -63,7 +114,8 @@ input {
     border-radius: 2px;
     user-select: none
 }
-.btn-google .google-icon-svg {
+
+#third-party-login-buttons .btn-google .google-icon-svg {
     position: absolute;
     margin-top: 11px;
     margin-left: 11px;
@@ -71,7 +123,8 @@ input {
     height: 18px;
     user-select: none
 }
-.btn-google .btn-text {
+
+#third-party-login-buttons .btn-google .btn-text {
     float: right;
     margin: 11px 14px 40px 40px;
     color: #757575;
@@ -80,11 +133,13 @@ input {
     font-family: Roboto;
     user-select: none
 }
-.btn-google:hover {
+
+#third-party-login-buttons .btn-google:hover {
     box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
     user-select: none
 }
-.btn-google:active {
+
+#third-party-login-buttons .btn-google:active {
     box-shadow: 0 1px 1px #757575;
     background: #F8F8F8;
     color: #fff;
