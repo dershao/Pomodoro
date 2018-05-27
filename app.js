@@ -29,3 +29,8 @@ homeController(app);
 //listen to port number
 app.listen(PORT);
 console.log("Listening to port %s...",  PORT);
+
+//login page
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/views/login.html');
+});
