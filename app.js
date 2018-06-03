@@ -32,9 +32,9 @@ console.log("Listening to port %s...",  PORT);
 
 //temporary location for this route
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/views/login.html');
+    res.sendFile(__dirname + '/views/register.html');
 });
 
-app.get('/register', function(req, res) {
-    res.sendFile(__dirname + '/views/register.html');
+app.get('/login', function(req, res) {
+    res.sendFile(__dirname + '/views/login.html');
 });

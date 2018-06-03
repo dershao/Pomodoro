@@ -16,7 +16,7 @@
 	position: relative;
 }
 
-#login-form {
+#registration-form {
 	margin: 0 auto;
 	width: 60%;
 }
@@ -70,8 +70,8 @@ input {
     padding-top: 1em;
 }
 
-.form-button #loginbtn {
-    font-family: Roboto;
+.form-button #registerbtn {
+    font-family: 'Roboto';
     font-size: 14px;
     margin: 0 auto;
 }
@@ -116,7 +116,6 @@ input {
     user-select: none;
     transition: all 400ms ease 0s;
     display: flex;
-    margin: 0 auto;  
 }
 
 #third-party-login-buttons .btn-thirdparty .thirdparty-icon-wrapper {
