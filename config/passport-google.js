@@ -3,16 +3,16 @@
  */
 
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20');
-const keys = require('./keys.js');
-const User = require('../models/user-model.js');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const User = require('../models/User.js');
 
+//done method: go on to the next stage, params: Error, User
 //take a piece of information to identify the user and put it into a cookie
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-//find the user by id and
+//when cookie returns from browser, get the id from the cookie and find the user by id
 passport.deserializeUser((id, done) => {
   User.findById(id).then((user) => {
     //attach user property to request object
@@ -25,9 +25,10 @@ passport.use(
   //options for strategy
   //after permission is granted, need a callback url to redirect
   callbackURL: '/auth/google/redirect',
-  clientID: keys.google.clientID, 
-  clientSecret: keys.google.clientSecret
+  clientID: process.env.GOOGLE_CLIENT_ID, 
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET
 }, (accessToken, refreshToken, profile, done) => {
+
     //passport callback function
     //accessToken: token from Google, use it to access information of user
     //refreshToken: refresh the access Token since the access could expire
@@ -43,15 +44,14 @@ passport.use(
         done(null, currentUser);
       } else {
         //we do not have user so we store a new user
-
         //googleId : the id that google gives that identifies the specified user
         new User({
-          username: profile.username,
+          username: profile.displayName,
           googleId: profile.id
         }).save().then((newUser) =>{
-          console.log('new user created: ' + newUser);
           done(null, newUser);
         });
       }
     });
-  }));
+  })
+);
