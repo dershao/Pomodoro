@@ -7,7 +7,9 @@ const passport = require('passport');
 
 //auth logout
 router.get('/logout', function(req, res) {
-	res.send('logging out');
+
+	req.logout();
+	res.redirect('/');
 });
 
 
@@ -22,9 +24,15 @@ router.get('/google', passport.authenticate('google', {
 //since code is present, we no longer need to load consent screen
 router.get('/google/redirect', passport.authenticate('google', { failureRedirect: '/login'}), function(req, res) {
 	//passport attaches the user to the req object
-	res.send("redirecting");
+	res.redirect('/home');
 });
 
+router.get('/facebook', passport.authenticate('facebook'));
+
+router.get('/facebook/redirect', passport.authenticate('facebook', { failureRedirect: '/login'}), function(req, res) {
+
+	res.redirect('/home');
+});
 
 
 module.exports = router;

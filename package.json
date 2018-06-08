@@ -12,10 +12,11 @@
     "body-parser": "^1.18.2",
     "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^5.0.1",
-    "ejs": "^2.5.7",
+    "ejs": "^2.6.1",
     "express": "^4.16.1",
     "mongoose": "^4.12.4",
     "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "passport-google-oauth20": "^1.0.0"
   },
   "devDependencies": {},

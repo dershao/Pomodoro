@@ -12,12 +12,25 @@ mongoose.connect(process.env.MONGO_DB, {
 
 mongoose.Promise = require('bluebird');
 
-var urlencodedParser = bodyParser.urlencoded({extended: false});
+
+
+const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = function(app) {
 
+  const authCheck = (req, res, next) => {
+    if (!req.user) {
+      console.log("no user");
+      res.redirect('/login');
+    } else {
+      console.log(req.user);
+      console.log("some user");
+      next();
+    }
+  };
+
   //home page, displays all tasks currently stored
-  app.get('/home', function(req, res) {
+  app.get('/home', authCheck, function(req, res) {
     Task.find({}, function(err, data) {
       if (err) throw err;
       res.render('home', {tasks: data});
@@ -25,7 +38,7 @@ module.exports = function(app) {
   });
 
   //get new task and store in it database
-  app.post('/home', urlencodedParser, function(req, res) {
+  app.post('/home', authCheck, urlencodedParser, function(req, res) {
     var newTask = Task(req.body).save(function(err, data) {
       if (err) throw err;
       res.json(data);
@@ -33,7 +46,7 @@ module.exports = function(app) {
   });
 
   //deletes selected task
-  app.delete('/:item', function(req, res) {
+  app.delete('/:item', authCheck, function(req, res) {
     Task.find({item: req.params.item.replace(/\-/g, " ")}).remove(function(err, data) {
       if (err) throw err;
       res.json(data);
