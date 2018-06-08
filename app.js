@@ -7,8 +7,7 @@ const taskController = require('./controllers/taskController');
 const homeController = require('./controllers/homeController');
 const auth = require('./routes/authRouter.js');
 
-/* requiring will run the code in the passport-(provider).js - we can now use authentication strategy 'google' */
-const passportGoogle = require('./config/passport-google');
+const passportGoogle = require('./config/passport-setup');
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').load();

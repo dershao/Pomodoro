@@ -1,9 +1,10 @@
 /**
- * Passport setup for Google. 
+ * Passport setup for Google and Facebook. 
  */
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/User.js');
 
 //done method: go on to the next stage, params: Error, User
@@ -40,7 +41,6 @@ passport.use(
     User.findOne({googleId: profile.id}).then((currentUser) => {
       if (currentUser) {
         //we already have the user
-        console.log("user is: " + profile);
         done(null, currentUser);
       } else {
         //we do not have user so we store a new user
@@ -54,4 +54,27 @@ passport.use(
       }
     });
   })
+);
+
+passport.use(
+  new FacebookStrategy({
+
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "http://localhost:5000/auth/facebook/redirect"
+  }), (accessToken, refreshToken, profile, done) => {
+    
+    User.findOne({facebookId: profile.id}).then((currentUser) => {
+      if (currentUser) {
+        done(null, currentUser);
+      } else {
+        new User({
+          username: profile.displayName,
+          facebookId: profile.id
+        }).save().then((newUser) =>{
+          done(null, newUser);
+        });
+      }
+    });
+  }
 );

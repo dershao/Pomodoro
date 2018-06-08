@@ -22,7 +22,7 @@ $(document).ready(function() {
 
       $.ajax({
         type: 'POST',
-        url: '/',
+        url: '/home',
         data: task,
         success: function(data) {
 
@@ -53,23 +53,37 @@ $(document).ready(function() {
     console.log("intervals completed: " + intervalsCompleted);
     console.log("work intervals: " + workIntervals);
 
-    //change the text of the current button when clicked
-    $(this).text() === "Start Task" ? $(this).html('Pause task') : $(this).html('Start Task');
+    //check if we're starting a new task or resuming a paused task
+    if (currentTask === "" || $(this).closest('.task').find('.task-name').text()) {
 
-    setupButtons(this);
+      //change the text of the current button when clicked
+      $(this).text() === "Start Task" ? $(this).html('Pause task') : $(this).html('Start Task');
 
-    onTask === true ? onTask = false : onTask = true;
+      setupButtons(this);
 
-    if (onTask === true) {
+      onTask === true ? onTask = false : onTask = true;
 
-      currentTask = $(this).closest('.task').find('.task-name').text();
-
-      setupTimer();
+      if (onTask === true) {
+        setupTimer();
+      }
+      else {
+        clearInterval(timer);
+      }
     }
     else {
-      clearInterval(timer);
-      minutes = DEFAULT_MINUTES;
-      seconds = DEFAULT_SECONDS;
+      
+      var confirmTask = confirm("Starting a new task will reset the timer (your original progress will still be saved).");
+      
+      if (confirmTask == true) {
+
+        currentTask = $(this).closest('.task').find('.task-name').text();
+        $(this).html('Pause task');
+        setupButtons(this);
+        onTask = true;
+        setupTimer();
+        minutes = DEFAULT_MINUTES;
+        seconds = DEFAULT_SECONDS;
+      }
     }
   });
 });
