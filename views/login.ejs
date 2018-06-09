@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Pomodoro - Register</title>
-    <link rel="stylesheet" type="text/css" href="/assets/register-style.css">
-    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+    <title>Pomodoro - Login</title>
+    <link rel="stylesheet" type="text/css" href="/css/login-style.css">
+    <link rel="icon" href="/icons/favicon.ico" type="image/x-icon" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   </head>
   <body>
@@ -12,23 +12,23 @@
       <div id="title-wrapper">
         <div id="title-header">
             <h1 id="title-text">Pomodoro</h1>
-            <img src="/assets/images/pomodoro_logo.png" alt="Pomodoro Logo">
+            <img src="/images/pomodoro_logo.png" alt="Pomodoro Logo">
         </div>
       </div>
   		<div id="form-wrapper">
-        <form id="registration-form">
+        <form id="login-form">
           <div id="third-party-login-buttons"> 
             <a class="btn-thirdparty" id="btn-google" href="/auth/google">
               <div class="thirdparty-icon-wrapper">
-                <img class="icon-svg" src="/assets/images/google_logo_icon.png"/>
+                <img class="icon-svg" src="/images/google_logo_icon.png"/>
               </div>
-              <p class="btn-text"><b>Sign up with Google</b></p>
+              <p class="btn-text"><b>Login with Google</b></p>
             </a>
             <a class="btn-thirdparty" id="btn-facebook" href="/auth/facebook">
               <div class="thirdparty-icon-wrapper">
-                <img class="icon-svg" src="/assets/images/facebook_logo_icon.png"/>
+                <img class="icon-svg" src="/images/facebook_logo_icon.png"/>
               </div>
-              <p class="btn-text"><b>Sign up with Facebook</b></p>
+              <p class="btn-text"><b>Login with Facebook</b></p>
             </a>
           </div>
           <div class="form-element">
@@ -39,13 +39,9 @@
             <label for="password">Password</label>
             <input id="password" class="form-input" type="password" placeholder="Password" required/>
           </div>
-          <div class="form-element">
-              <label for="confirm">Confirm Password</label>
-              <input id="confirm" class="form-input" type="password" placeholder="Confirm Password" required/>
-            </div>
           <div class="form-button">
-            <input id="registerbtn" type="submit" value="Register"/>
-            <div>Already have an account? <a href="/login">Login here.</a><div>
+            <input id="loginbtn" type="submit" value="Login"/>
+            <div>Don't have an account? <a href="/">Sign up here.</a><div>
           </div>
         </form>
       </div>
