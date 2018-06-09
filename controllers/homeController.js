@@ -12,8 +12,6 @@ mongoose.connect(process.env.MONGO_DB, {
 
 mongoose.Promise = require('bluebird');
 
-
-
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = function(app) {

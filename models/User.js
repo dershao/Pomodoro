@@ -26,9 +26,9 @@ userSchema.pre('save', function(next) {
         return next(err);
       }
       user.password = hash;
-      next();
     });
   }
+  next();
 });
 
 userSchema.statics.authenticate = function (user, password, callback) {

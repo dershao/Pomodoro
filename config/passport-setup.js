@@ -61,9 +61,9 @@ passport.use(
 
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:5000/auth/facebook/redirect"
-  }), (accessToken, refreshToken, profile, done) => {
-    
+    callbackURL: '/auth/facebook/redirect'
+  }, (accessToken, refreshToken, profile, done) => {
+
     User.findOne({facebookId: profile.id}).then((currentUser) => {
       if (currentUser) {
         done(null, currentUser);
@@ -71,10 +71,10 @@ passport.use(
         new User({
           username: profile.displayName,
           facebookId: profile.id
-        }).save().then((newUser) =>{
+        }).save().then((newUser) => {
           done(null, newUser);
         });
       }
     });
-  }
+  })
 );

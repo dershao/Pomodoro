@@ -9,7 +9,8 @@ var taskSchema = new mongoose.Schema({
     item: String,
     count: Number,
     complete: {type: Number, default: 0},
-    timeRemaining: Number
+    timeRemaining: Number,
+    userId: Number
 });
 
 var Task = mongoose.model('Task', taskSchema);

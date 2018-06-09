@@ -30,7 +30,6 @@ router.get('/google/redirect', passport.authenticate('google', { failureRedirect
 router.get('/facebook', passport.authenticate('facebook'));
 
 router.get('/facebook/redirect', passport.authenticate('facebook', { failureRedirect: '/login'}), function(req, res) {
-
 	res.redirect('/home');
 });
 
