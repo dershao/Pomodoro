@@ -3,10 +3,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const passportGoogle = require('./config/passport-setup');
+const passportSetup = require('./config/passport-setup');
 
 //port number
 const PORT = process.env.PORT || 5000;

@@ -1,13 +1,13 @@
+/** 
+ * User controller. 
+ */
+
 const router = require('express').Router();
-const mongoose = require('mongoose');
-const urlencodedParser = require('body-parser');
+const bodyParser = require('body-parser');
 const User = require('../models/User');
 
-if (process.env.NODE_ENV !== "production") {
-    require('dotenv').load();
-}
+router.post('/register', bodyParser.urlencoded({extended: true}), (req, res) => {
     
-router.post('/user/register', urlencodedParser, (req, res) => {
     if (req.body.username && req.body.password) {
         
         let newUserData = {
@@ -15,7 +15,7 @@ router.post('/user/register', urlencodedParser, (req, res) => {
             password: req.body.password
         }
         
-        User.create(newUserData, (req, res) => {
+        User.create(newUserData, (err, user) => {
             if (err) {
                 return next(err);
             }

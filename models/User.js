@@ -20,15 +20,18 @@ const userSchema = new Schema({
 
 userSchema.pre('save', function(next) {
   var user = this;
-  if (user.password) {
-    bcrypt.hash(user.password, 10, function (err, hash) {
-      if (err) {
-        return next(err);
-      }
+  bcrypt.hash(user.password, 10, function (err, hash) {
+    
+    if (err) {
+      return next(err);
+    }
+
+    if (user.password) {
       user.password = hash;
-    });
-  }
-  next();
+    }
+    next();
+  });
+ 
 });
 
 userSchema.statics.authenticate = function (user, password, callback) {
