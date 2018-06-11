@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const authCheck = require('../middlewares/authCheck');
 const router = require('express').Router();
@@ -7,12 +6,6 @@ const Task = require('../models/Task');
 if (process.env.NODE_ENV !== "production") {
   require('dotenv').load();
 }
-
-mongoose.connect(process.env.MONGO_DB, {
-  useMongoClient: true
-});
-
-mongoose.Promise = require('bluebird');
 
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 

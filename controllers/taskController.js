@@ -1,12 +1,13 @@
-var router = require('express').Router();
-var bodyParser = require('body-parser');
-var Task = require('../models/Task');
+const router = require('express').Router();
+const bodyParser = require('body-parser');
+const Task = require('../models/Task');
+const authCheck = require('../middlewares/authCheck');
 
 //middleware for parsing urls
-var urlencodedParser = bodyParser.urlencoded({extended: false});
+const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 //get all data for tasks
-router.get('/', (req, res) => {
+router.get('/', authCheck, (req, res) => {
   Task.find({}, (err, data) => {
       if (err) throw err;
       if (data === null) {
@@ -20,7 +21,7 @@ router.get('/', (req, res) => {
 });
 
 //get all data on specific task
-router.get('/data/:item', (req, res) => {
+router.get('/data/:item', authCheck, (req, res) => {
   Task.findOne({'item': req.params.item}, (err, data) => {
     if (err) throw err;
     if (data == null) {
@@ -33,7 +34,7 @@ router.get('/data/:item', (req, res) => {
   });
 });
 
-router.put('/:item', urlencodedParser, (req, res) => {
+router.put('/:item', authCheck, urlencodedParser, (req, res) => {
   Task.findOneAndUpdate({item: req.params.item}, {$inc: {complete: 1} }, {new: true}, (err, data) => {
     if (err) {
       res.status(500);
@@ -45,7 +46,7 @@ router.put('/:item', urlencodedParser, (req, res) => {
   });
 });
 
-router.delete('/:item', (req, res) => {
+router.delete('/:item', authCheck, (req, res) => {
   Task.find({item: req.params.item.replace(/\-/g, " ")})
     .remove(function(err, data) {
       if (err) throw err;

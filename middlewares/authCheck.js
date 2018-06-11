@@ -3,7 +3,10 @@
  */
 
 const authCheck = (req, res, next) => {
-    if (!req.user) { 
+
+    console.log(req.user);
+    console.log(req.session.id);
+    if (!req.user) {
         res.status(401);
         res.redirect('/login');
     } else {

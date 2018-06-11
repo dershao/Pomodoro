@@ -3,12 +3,20 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-const cookieSession = require('cookie-session');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose');
 const passport = require('passport');
 const passportSetup = require('./config/passport-setup');
 
 //port number
 const PORT = process.env.PORT || 5000;
+
+mongoose.connect(process.env.MONGO_DB, {
+    useMongoClient: true
+});
+
+mongoose.Promise = require('bluebird');
 
 //express app
 const app = express();
@@ -17,9 +25,12 @@ const app = express();
 app.set('view engine', 'ejs');
 
 //encrypt the cookie with a specify length of time
-app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000, //age of one day
-    keys: [process.env.COOKIE_KEY]
+app.use(session({
+    cookie: {maxAge: 24 * 60 * 60 * 1000},
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.COOKIE_KEY,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 //initializes passport
