@@ -8,6 +8,8 @@ const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 const passport = require('passport');
 const passportSetup = require('./config/passport-setup');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 //port number
 const PORT = process.env.PORT || 5000;
@@ -36,6 +38,11 @@ app.use(session({
 //initializes passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+//body parser
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(cookieParser());
 
 //use static files at specified directory
 app.use(express.static("./public"));

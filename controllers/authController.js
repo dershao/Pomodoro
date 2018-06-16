@@ -4,6 +4,9 @@
 
 const router = require('express').Router();
 const passport = require('passport');
+const User = require('../models/User');
+const sessionCheck = require('../middlewares/sessionCheck');
+const isCorrectPassword = require('../utils/isCorrectPassword');
 
 //auth logout
 router.get('/logout', function(req, res) {
@@ -34,5 +37,52 @@ router.get('/facebook/redirect', passport.authenticate('facebook', { failureRedi
 	res.redirect('/home');
 });
 
+router.post('/register', sessionCheck, (req, res) => {
+
+    if (req.body.username && req.body.password) {
+
+        const newUserData = {
+            username: req.body.username,
+            password: req.body.password
+        };
+
+        User(newUserData).save( (err, user) => {
+            if (err) {
+                res.status(500).send(err);
+            }
+            else {
+                req.session.user = user.username;
+                res.status(200).end();
+            }   
+        });
+    }
+});
+
+router.post('/login', sessionCheck, (req, res) => {
+
+    const username = req.body.username;
+    const password = req.body.password;
+
+    User.findOne({ username: username }, (err, user) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+
+        if (user) {
+            isCorrectPassword(password, user.password)
+                .then((result) =>{
+
+                    if (result) {
+                        req.session.user = username;
+                        res.status(200).end();
+                    } else {
+                        res.status(401).end();
+                    }
+                })
+        } else {
+            res.status(401).end();
+        }
+    });
+});
 
 module.exports = router;

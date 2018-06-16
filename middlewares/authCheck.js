@@ -4,9 +4,7 @@
 
 const authCheck = (req, res, next) => {
 
-    console.log(req.user);
-    console.log(req.session.id);
-    if (!req.user) {
+    if (!req.user && !req.session.user) {
         res.status(401);
         res.redirect('/login');
     } else {
