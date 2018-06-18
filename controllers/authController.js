@@ -52,6 +52,7 @@ router.post('/register', sessionCheck, (req, res) => {
             }
             else {
                 req.session.user = user.username;
+                req.session.userId = user._id.toString();
                 res.status(200).end();
             }   
         });
@@ -74,6 +75,7 @@ router.post('/login', sessionCheck, (req, res) => {
 
                     if (result) {
                         req.session.user = username;
+                        req.session.userId = user._id.toString();
                         res.status(200).end();
                     } else {
                         res.status(401).end();

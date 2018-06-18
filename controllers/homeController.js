@@ -11,7 +11,7 @@ const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 //home page, displays all tasks currently stored
 router.get('/', authCheck, function(req, res) {
-  Task.find({}, function(err, data) {
+  Task.find({userId: req.session.userId || req.session.passport.user}, function(err, data) {
     if (err) throw err;
     res.render('home', {tasks: data});
   });
@@ -19,15 +19,24 @@ router.get('/', authCheck, function(req, res) {
 
 //get new task and store in it database
 router.post('/', authCheck, urlencodedParser, function(req, res) {
-  var newTask = Task(req.body).save(function(err, data) {
+
+  const userId = req._passport ? req._passport.session.user : req.session.userId;
+
+  const newTask = {
+    item: req.body.item,
+    count: req.body.count,
+    userId: userId,
+  };
+
+  var makeNewTask = Task(newTask).save(function(err, data) {
     if (err) throw err;
     res.json(data);
-  })
+  });
 });
 
 //deletes selected task
 router.delete('/:item', authCheck, function(req, res) {
-  Task.find({item: req.params.item.replace(/\-/g, " ")}).remove(function(err, data) {
+  Task.find({item: req.params.item.replace(/\-/g, " "), userId: req.session.userId || req._passport.session.user}).remove(function(err, data) {
     if (err) throw err;
     res.json(data);
   });

@@ -10,9 +10,13 @@ const bcrypt = require('bcrypt');
 const userSchema = new Schema({
   username: {
     type: String,
+    unique: true,
   },
   password: {
     type:  String,
+  },
+  displayName: {
+    type: String 
   },
   googleId: String, 
   facebookId: String

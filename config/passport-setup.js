@@ -46,7 +46,7 @@ passport.use(
         //we do not have user so we store a new user
         //googleId : the id that google gives that identifies the specified user
         new User({
-          username: profile.displayName,
+          displayName: profile.displayName,
           googleId: profile.id
         }).save().then((newUser) =>{
           done(null, newUser);
@@ -69,7 +69,7 @@ passport.use(
         done(null, currentUser);
       } else {
         new User({
-          username: profile.displayName,
+          displayName: profile.displayName,
           facebookId: profile.id
         }).save().then((newUser) => {
           done(null, newUser);

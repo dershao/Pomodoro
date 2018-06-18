@@ -2,7 +2,19 @@
 	margin: 0px;
 }
 
-#navbar {
+nav {
+	display: flex;
+}
+
+nav #nav-buttons {
+	width: 80%;
+}
+
+nav #profile {
+	width: 20%;
+}
+
+#titlebar {
 	height: 150px;
 	background-color: rgb(246, 231, 174);
 	width: 100%;
@@ -15,7 +27,7 @@
 	margin-left: auto;
 	position: relative;
 	top: 50%;
-  transform: translateY(-100%);
+  	transform: translateY(-100%);
 }
 
 h1 {

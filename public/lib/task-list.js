@@ -40,7 +40,7 @@ $(document).ready(function() {
       var item = $(this).text().replace(/ /g, '-');
       $.ajax({
         type: 'DELETE',
-        url: '/' + item,
+        url: '/home/' + item,
         success: function(data) {
 
           location.reload();
