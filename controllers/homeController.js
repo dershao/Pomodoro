@@ -13,7 +13,7 @@ const urlencodedParser = bodyParser.urlencoded({extended: false});
 router.get('/', authCheck, function(req, res) {
   Task.find({userId: req.session.userId || req.session.passport.user}, function(err, data) {
     if (err) throw err;
-    res.render('home', {tasks: data});
+    res.render('home', {tasks: data, user: req.user || req.session.user});
   });
 });
 
