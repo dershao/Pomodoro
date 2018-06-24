@@ -20,7 +20,7 @@ router.get('/', authCheck, function(req, res) {
 //get new task and store in it database
 router.post('/', authCheck, urlencodedParser, function(req, res) {
 
-  const userId = req._passport ? req._passport.session.user : req.session.userId;
+  const userId = req._passport.session ? req._passport.session.user : req.session.userId;
 
   const newTask = {
     item: req.body.item,
