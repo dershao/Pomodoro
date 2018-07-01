@@ -21,6 +21,11 @@
 	width: 60%;
 }
 
+#status-message {
+    text-align: center;
+    font-family: 'Roboto';
+}
+
 .form-element {
 	margin-bottom: 1em;
 }

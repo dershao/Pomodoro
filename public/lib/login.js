@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
     $("#login-form").on("submit", function() {
@@ -9,14 +8,20 @@ $(document).ready(function() {
         const userInfo = {
             username: username.val(),
             password: password.val(),
-        }
+        };
 
         $.ajax({
-            type: 'POST',
-            url: '/auth/login',
+            type: "POST",
+            url: "/auth/login",
             data: userInfo,
-            success: function(data) {
-                window.location.href = '/home';
+            dataType: "json",
+            complete: function(xhr, exception) {
+                console.debug(xhr);
+                if (xhr.responseJSON.status === 200) {
+                    window.location.href = "/home";
+                } else if (xhr.responseJSON.status === 401) {
+                    document.getElementById("status-message").innerHTML = xhr.responseJSON.message;
+                }
             }
         });
         

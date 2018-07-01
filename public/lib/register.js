@@ -20,8 +20,14 @@ $(document).ready(function() {
             type: 'POST',
             url: '/auth/register',
             data: userInfo,
-            success: function(data) {
-                window.location.href = '/home';
+            dataType: "json",
+            complete: function(xhr, exception) {
+
+                if (xhr.status === 200) {
+                    window.location.href = "/home";
+                } else if (xhr.status === 500 && xhr.responseJSON.code === 11000) {
+                    document.getElementById("status-message").innerHTML = `User ${userInfo.username} already exists.`;
+                }
             }
         });
 
