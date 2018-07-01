@@ -14,11 +14,15 @@ const cookieParser = require('cookie-parser');
 //port number
 const PORT = process.env.PORT || 5000;
 
+mongoose.Promise = require('bluebird');
+
 mongoose.connect(process.env.MONGO_DB, {
     useMongoClient: true
+}).then(() => {
+    console.info('Connection with database established...');
+}, (err) => {
+    console.error(`Error connecting to database: ${err}`);
 });
-
-mongoose.Promise = require('bluebird');
 
 //express app
 const app = express();
@@ -45,9 +49,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 //use static files at specified directory
-app.use(express.static("./public"));
+app.use(express.static('./public'));
 app.use('/', require('./controllers'));
 
 //listen to port number
 app.listen(PORT);
-console.log("Listening to port %s...",  PORT);
+console.log('Listening to port %s...',  PORT);
