@@ -1,8 +1,8 @@
-const DEFAULT_MINUTES = 0;
-const DEFAULT_SECONDS = 2;
+const DEFAULT_MINUTES = 25;
+const DEFAULT_SECONDS = 0;
 
-var seconds = 2;
-var minutes = 0;
+var seconds = 0;
+var minutes = 25;
 var onTask = false;
 var currentTask = "";
 var workIntervals = 0;
@@ -87,6 +87,17 @@ $(document).ready(function() {
       }
     }
   });
+
+  $('.closebtn').onclick = function() {
+
+    var parent = this.parentElement; 
+    
+    parent.style.opacity = 0; 
+
+    setTimeout(function() {
+      div.style.display = "none";
+    }, 600);
+  }
 });
 
 function setup() {
@@ -186,6 +197,7 @@ function updateIntervalsCompleted() {
         setTaskAsDone(document.getElementById(currentTaskId));
       }
       reset();
+      showNotification();
     }
   });
 }
@@ -220,4 +232,28 @@ function setTaskAsDone(taskElement) {
   var finishedTaskStartButton = taskElement.querySelector('.start-button');
   finishedTaskStartButton.disabled = true;
   finishedTaskStartButton.innerHTML = "Done";
+}
+
+function showNotification() {
+  
+  var closeButton = document.getElementsByClassName('closebtn');
+
+  closeButton[0].onclick = function() {
+
+    var notification = this.parentElement;
+    notification.style.opacity = "0";
+    setTimeout(function() {
+      notification.style.visibility = "hidden";
+      clearTimeout(timeoutToInvisible);
+    }, 600);
+  }
+
+  var notification = document.getElementsByClassName('notification');
+
+  notification[0].style.visibility = "visible";
+
+  var timeoutToInvisible = setTimeout(function() {
+    notification[0].style.visibility = "hidden";
+    notification[0].style.opacity = "0";
+  }, 5000);
 }

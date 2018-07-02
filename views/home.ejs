@@ -15,7 +15,8 @@
         <li><a href="/auth/logout">Logout</a></li>
       </ul>
       <div id="title">
-        <h1>Pomodoro</h1>
+        <h1 id="title-text">Pomodoro</h1>
+        <img src="/images/pomodoro_logo.png" alt="Pomodoro Logo">
       </div>
       <div id="timer">25:00</div>
 		</div>
@@ -23,7 +24,12 @@
     <div id="progressBar">
       <div id="progress"></div>
     </div>
-
+    <div id="notification-wrapper">
+      <div class="notification">
+        <span class="closebtn">&times;</span>
+        <strong>Good job!</strong> You worked for 25 minutes.
+      </div>
+    </div>
 		<div id="container">
       <form>
         <input id="task-input" type="text" name="task" placeholder="Add a new task..." required/>
@@ -33,12 +39,12 @@
       <div id="task-list">
         <div id="task-container">
           <% for (var i=0; i < tasks.length; i++) { %>
-            <div class="task" id=<%=i%>>
+            <div class="task" id="task<%=i%>">
               <div class="task-name"><%= tasks[i].item %></div>
               <% if (tasks[i].count === tasks[i].complete) { %>
                 <button class="start-button" disabled=true>Done</button>
                 <style>
-                  .task {
+                  #task<%=i%> {
                     background-color: rgb(179, 255, 179);
                   }
                 </style>
