@@ -33,9 +33,18 @@
       <div id="task-list">
         <div id="task-container">
           <% for (var i=0; i < tasks.length; i++) { %>
-            <div class="task">
+            <div class="task" id=<%=i%>>
               <div class="task-name"><%= tasks[i].item %></div>
-              <button class="start-button">Start Task</button>
+              <% if (tasks[i].count === tasks[i].complete) { %>
+                <button class="start-button" disabled=true>Done</button>
+                <style>
+                  .task {
+                    background-color: rgb(179, 255, 179);
+                  }
+                </style>
+              <% } else { %>
+                <button class="start-button">Start Task</button> 
+              <% } %>
             </div>
           <% } %>
         </div>

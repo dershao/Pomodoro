@@ -1,16 +1,17 @@
-const DEFAULT_MINUTES = 25;
-const DEFAULT_SECONDS = 0;
+const DEFAULT_MINUTES = 0;
+const DEFAULT_SECONDS = 2;
 
-var seconds = 0;
-var minutes = 25;
+var seconds = 2;
+var minutes = 0;
 var onTask = false;
 var currentTask = "";
 var workIntervals = 0;
 var intervalsCompleted = 0;
 var timer;
+var currentProgress = 1;
+var currentTaskId;
 
 $(document).ready(function() {
-
   //when page is loaded, gather information on tasks, work intervals, and progress
   setup();
 
@@ -42,16 +43,13 @@ $(document).ready(function() {
         type: 'DELETE',
         url: '/home/' + item,
         success: function(data) {
-
+        
           location.reload();
         }
       });
   });
 
   $('.start-button').on('click', function() {
-
-    console.log("intervals completed: " + intervalsCompleted);
-    console.log("work intervals: " + workIntervals);
 
     //check if we're starting a new task or resuming a paused task
     if (currentTask === "" || $(this).closest('.task').find('.task-name').text()) {
@@ -60,6 +58,9 @@ $(document).ready(function() {
       $(this).text() === "Start Task" ? $(this).html('Pause task') : $(this).html('Start Task');
 
       setupButtons(this);
+
+      currentTask = $(this).closest('.task').find('.task-name').text();
+      currentTaskId = $(this).closest('.task').attr('id');
 
       onTask === true ? onTask = false : onTask = true;
 
@@ -89,12 +90,10 @@ $(document).ready(function() {
 });
 
 function setup() {
-
   //when page is loaded, calculate the number of work intervals is needed
   fetch('/task')
     .then(function(res) {
       if (res.status !== 200) {
-        console.log("error");
         return;
       }
       res.json().then(function(data) {
@@ -105,7 +104,6 @@ function setup() {
         updateProgressBar();
       });
     });
-
 }
 
 function setupTimer() {
@@ -128,12 +126,22 @@ function setupTimer() {
     }
 
     if (seconds < 10) {
-      document.getElementById('timer').innerHTML = minutes + ":" + "0" + seconds;
+      document.getElementById('timer').innerHTML = minutes + ":0" + seconds;
     }
     else {
       document.getElementById('timer').innerHTML = minutes + ":" + seconds;
     }
   }, 1000);
+}
+
+function reset() {
+
+  currentTask = "";
+  currentTaskId = "";
+  onTask = false;
+  minutes = DEFAULT_MINUTES;
+  seconds = DEFAULT_SECONDS;
+  document.getElementById('timer').innerHTML = DEFAULT_MINUTES + ":0" + DEFAULT_SECONDS;
 }
 
 function setupButtons(button) {
@@ -145,23 +153,39 @@ function setupButtons(button) {
     if (buttons[i] !== button) {
 
       //when a task is in progress, disable all other start task buttons
-      buttons[i].disabled === true ? buttons[i].disabled = false : buttons[i].disabled = true;
+      if (buttons[i].disabled === true && buttons[i].innerHTML !== "Done") {
+        buttons[i].disabled = false;
+      }
+    }
+  }
+}
+
+function resetButtons() {
+
+  var buttons = document.querySelectorAll('.start-button');
+
+  for (var i = 0; i < buttons.length; i++) {
+
+    if (buttons[i].innerHTML !== "Done") {
+      buttons[i].disabled = false;
+      buttons[i].innerHTML = "Start Task";
     }
   }
 }
 
 function updateIntervalsCompleted() {
 
-  var currentIntervalsCompleted;
-  var workIntervalsRequired;
-
   $.ajax({
     type: 'PUT',
     url: '/task/' + currentTask,
     success: function(data) {
-      currentIntervalsCompleted = data.complete;
-      workIntervalsRequired = data.count;
-      location.reload();
+      intervalsCompleted++;
+      updateProgressBar();
+      resetButtons();
+      if (data.complete === data.count) {
+        setTaskAsDone(document.getElementById(currentTaskId));
+      }
+      reset();
     }
   });
 }
@@ -169,15 +193,15 @@ function updateIntervalsCompleted() {
 function updateProgressBar() {
 
   var progressElement = document.getElementById('progress');
-  var progress = 1;
+  var newProgress = 1;
 
   if (workIntervals > 0) {
-    var progress = Math.floor(intervalsCompleted/workIntervals * 100);
+    newProgress = Math.floor(intervalsCompleted/workIntervals * 100);
   }
 
-  var width = 1;
+  var width = currentProgress;
   var increment = setInterval(function() {
-    if (width >= progress) {
+    if (width >= newProgress) {
       clearInterval(increment);
     }
     else {
@@ -185,4 +209,15 @@ function updateProgressBar() {
       progressElement.style.width = width + '%';
     }
   }, 10);
+
+  currentProgress = newProgress;
+}
+
+function setTaskAsDone(taskElement) {
+
+  taskElement.style.backgroundColor = "rgb(179, 255, 179)";
+
+  var finishedTaskStartButton = taskElement.querySelector('.start-button');
+  finishedTaskStartButton.disabled = true;
+  finishedTaskStartButton.innerHTML = "Done";
 }
