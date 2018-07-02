@@ -198,6 +198,7 @@ function updateIntervalsCompleted() {
       }
       reset();
       showNotification();
+      playNotificationSound();
     }
   });
 }
@@ -256,4 +257,10 @@ function showNotification() {
     notification[0].style.visibility = "hidden";
     notification[0].style.opacity = "0";
   }, 5000);
+}
+
+function playNotificationSound() {
+
+  var notification = new Audio('../sounds/notification.m4a');
+  notification.play();
 }
