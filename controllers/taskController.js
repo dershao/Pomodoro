@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const bodyParser = require('body-parser');
 const Task = require('../models/Task');
 const authCheck = require('../middlewares/authCheck');
 const redisClient = require('../config/redis-client');
@@ -34,13 +33,17 @@ router.get('/data/:item', authCheck, (req, res) => {
   });
 });
 
+// update a task's complete counter after successful completion
 router.put('/:item', authCheck, (req, res) => {
+  const sessionId = req.session.user  || req.user.googleId;
+
   Task.findOneAndUpdate({item: req.params.item, userId: req.session.userId || req.session.passport.user}, {$inc: {complete: 1} }, {new: true}, (err, data) => {
     if (err) {
       res.status(500).json({status: 500, message: "Something went wrong when updating the database"});
       console.log("Something went wrong when updating database");
     }
     else {
+      redisClient.hdel(sessionId, req.params.item);
       res.json(data);
     }
   });
@@ -54,10 +57,17 @@ router.delete('/:item', authCheck, (req, res) => {
     });
 });
 
-router.post('/save', authCheck, (req, res) => {
-  let sessionId = req.params.sessionId;
-  let task = req.params.task;
-  let timeRemamining = 
+router.post('/pause', authCheck, (req, res) => {
+  const sessionId = req.session.user || req.user.googleId;
+  const task = req.body.currentTask;
+  const timeRemaining = req.body.timeRemaining;
+
+  if (!task || !timeRemaining) {
+    console.error("Missing one or more parameters. task: " + task + " timeRemaining: " + timeRemaining);
+    res.status(400).end();
+  }
+
+  redisClient.hset(sessionId, task, timeRemaining);
 
   res.status(200).end();
 });
