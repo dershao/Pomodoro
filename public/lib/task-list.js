@@ -1,8 +1,10 @@
 const DEFAULT_MINUTES = 25;
 const DEFAULT_SECONDS = 0;
+const DEFAULT_TOTAL_MILLISECONDS = 1500000; // 25 min * 60 seconds * 1000 milliseconds
 
 var seconds = 0;
 var minutes = 25;
+var millisecondsTotal = 1500000;
 var onTask = false;
 var currentTask = "";
 var workIntervals = 0;
@@ -10,6 +12,7 @@ var intervalsCompleted = 0;
 var timer;
 var currentProgress = 1;
 var currentTaskId;
+var progressList = new Map();
 
 $(document).ready(function() {
   //when page is loaded, gather information on tasks, work intervals, and progress
@@ -52,15 +55,38 @@ $(document).ready(function() {
   $('.start-button').on('click', function() {
 
     //check if we're starting a new task or resuming a paused task
-    if (currentTask === "" || $(this).closest('.task').find('.task-name').text()) {
-
-      //change the text of the current button when clicked
-      $(this).text() === "Start Task" ? $(this).html('Pause task') : $(this).html('Start Task');
-
-      setupButtons(this);
+    if (currentTask === "" || $(this).closest('.task').find('.task-name').text() === currentTask) {
 
       currentTask = $(this).closest('.task').find('.task-name').text();
       currentTaskId = $(this).closest('.task').attr('id');
+
+      if ($(this).text() === "Start Task") {
+        $(this).html('Pause task');
+
+        if (progressList.has(currentTask)) {
+          minutes = Math.floor(Number(progressList.get(currentTask)) / 60000);
+          seconds = Math.floor((Number(progressList.get(currentTask)) % 60000) / 1000);
+          millisecondsTotal = progressList.get(currentTask);
+          progressList.delete(currentTask);
+        }
+
+      } else {
+        $(this).html('Start Task');
+
+        progressList.set(currentTask, millisecondsTotal);
+
+        let data = {timeRemaining: millisecondsTotal, currentTask: currentTask};
+        $.ajax({
+            type: 'POST',
+            url: '/task/pause',
+            data: data,
+            success: function() {
+              console.debug("Successfully made POST request to /pause");
+            }
+        });
+      }
+
+      setupButtons(this);
 
       onTask === true ? onTask = false : onTask = true;
 
@@ -73,17 +99,26 @@ $(document).ready(function() {
     }
     else {
       
-      var confirmTask = confirm("Starting a new task will reset the timer (your original progress will still be saved).");
-      
+      const confirmTask = confirm("Starting a new task will reset the timer (your original progress will still be saved).");
+
       if (confirmTask == true) {
 
-        currentTask = $(this).closest('.task').find('.task-name').text();
         $(this).html('Pause task');
         setupButtons(this);
         onTask = true;
+        currentTask = $(this).closest('.task').find('.task-name').text();
+
+        if (progressList.has(currentTask)) {
+            minutes = Math.floor(Number(progressList.get(currentTask)) / 60000);
+            seconds = Math.floor((Number(progressList.get(currentTask)) % 60000) / 1000);
+            millisecondsTotal = progressList.get(currentTask);
+            progressList.delete(currentTask);
+        } else {
+            minutes = DEFAULT_MINUTES;
+            seconds = DEFAULT_SECONDS;
+            millisecondsTotal = DEFAULT_TOTAL_MILLISECONDS;
+        }
         setupTimer();
-        minutes = DEFAULT_MINUTES;
-        seconds = DEFAULT_SECONDS;
       }
     }
   });
@@ -142,6 +177,9 @@ function setupTimer() {
     else {
       document.getElementById('timer').innerHTML = minutes + ":" + seconds;
     }
+
+    console.debug(millisecondsTotal);
+    millisecondsTotal -= 1000;
   }, 1000);
 }
 
@@ -166,6 +204,8 @@ function setupButtons(button) {
       //when a task is in progress, disable all other start task buttons
       if (buttons[i].disabled === true && buttons[i].innerHTML !== "Done") {
         buttons[i].disabled = false;
+      } else {
+        buttons[i].disabled = true;
       }
     }
   }
@@ -196,6 +236,7 @@ function updateIntervalsCompleted() {
       if (data.complete === data.count) {
         setTaskAsDone(document.getElementById(currentTaskId));
       }
+      progressList.delete(currentTask);
       reset();
       showNotification();
       playNotificationSound();
