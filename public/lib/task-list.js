@@ -1,8 +1,10 @@
 const DEFAULT_MINUTES = 25;
 const DEFAULT_SECONDS = 0;
+const DEFAULT_TOTAL_MILLISECONDS = 150000; // 25 min * 60 seconds * 1000 milliseconds  
 
 var seconds = 0;
 var minutes = 25;
+var millisecondsTotal = 150000; 
 var onTask = false;
 var currentTask = "";
 var workIntervals = 0;
@@ -73,8 +75,8 @@ $(document).ready(function() {
     }
     else {
       
-      var confirmTask = confirm("Starting a new task will reset the timer (your original progress will still be saved).");
-      
+      const confirmTask = confirm("Starting a new task will reset the timer (your original progress will still be saved).");
+
       if (confirmTask == true) {
 
         currentTask = $(this).closest('.task').find('.task-name').text();
@@ -84,6 +86,7 @@ $(document).ready(function() {
         setupTimer();
         minutes = DEFAULT_MINUTES;
         seconds = DEFAULT_SECONDS;
+        millisecondsTotal = DEFAULT_TOTAL_MILLISECONDS;
       }
     }
   });
@@ -142,6 +145,8 @@ function setupTimer() {
     else {
       document.getElementById('timer').innerHTML = minutes + ":" + seconds;
     }
+
+    millisecondsTotal -= 1000;
   }, 1000);
 }
 
@@ -166,6 +171,8 @@ function setupButtons(button) {
       //when a task is in progress, disable all other start task buttons
       if (buttons[i].disabled === true && buttons[i].innerHTML !== "Done") {
         buttons[i].disabled = false;
+      } else {
+        buttons[i].disabled = true;
       }
     }
   }

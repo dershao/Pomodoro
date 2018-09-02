@@ -3,10 +3,6 @@ const authCheck = require('../middlewares/authCheck');
 const router = require('express').Router();
 const Task = require('../models/Task');
 
-if (process.env.NODE_ENV !== "production") {
-  require('dotenv').load();
-}
-
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 //home page, displays all tasks currently stored

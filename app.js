@@ -1,7 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').load();
-}
-
+const loadenv = require('./utils/loadenv')();
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -10,6 +7,7 @@ const passport = require('passport');
 const passportSetup = require('./config/passport-setup');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const redisClient = require('./config/redis-client');
 
 //port number
 const PORT = process.env.PORT || 5000;
