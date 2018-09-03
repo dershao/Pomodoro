@@ -26,7 +26,8 @@
     "eslint": "^5.5.0"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "lint": "node ./node_modules/eslint/bin/eslint.js"
   },
   "repository": {
     "type": "git",
