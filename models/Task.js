@@ -2,7 +2,7 @@
  * Model for a Pomodoro task.
  */
 
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 //blueprint for Task model
 var taskSchema = new mongoose.Schema({
@@ -13,6 +13,6 @@ var taskSchema = new mongoose.Schema({
     userId: String
 });
 
-var Task = mongoose.model('Task', taskSchema);
+var Task = mongoose.model("Task", taskSchema);
 
 module.exports = Task;

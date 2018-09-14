@@ -1,10 +1,10 @@
 $(document).ready(function() {
 
-    $('#registration-form').on('submit', function() {
+    $("#registration-form").on("submit", function() {
         
-        const username = $('#username');
-        const password = $('#password');
-        const confirm = $('#confirm');
+        const username = $("#username");
+        const password = $("#password");
+        const confirm = $("#confirm");
 
         if (password.val() !== confirm.val()) {
             alert("Error: Passwords don't match.");
@@ -17,8 +17,8 @@ $(document).ready(function() {
         };
 
         $.ajax({
-            type: 'POST',
-            url: '/auth/register',
+            type: "POST",
+            url: "/auth/register",
             data: userInfo,
             dataType: "json",
             complete: function(xhr, exception) {

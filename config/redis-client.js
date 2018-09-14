@@ -1,4 +1,4 @@
-const redis = require('redis');
+const redis = require("redis");
 
 const client = redis.createClient({
     url: process.env.REDIS_URL,
@@ -19,12 +19,12 @@ const client = redis.createClient({
     }
 });
 
-client.on('connect', () => {
+client.on("connect", () => {
     console.info(`Redis server connected at: ${process.env.REDIS_URL}`);
 });
 
-client.on('reconnecting', () => {
-    console.info('Redis server reconnecting...');
+client.on("reconnecting", () => {
+    console.info("Redis server reconnecting...");
 });
 
 module.exports = client;

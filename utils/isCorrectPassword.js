@@ -1,6 +1,6 @@
 
-const bcrypt = require('bcrypt');
-const User = require('../models/User');
+const bcrypt = require("bcrypt");
+const User = require("../models/User");
 
 /** 
  * Checks if the user's password matches the password inputted.
@@ -17,6 +17,6 @@ const isCorrectPassword = (password, hash) => {
             resolve(result);
         });
     });
-}   
+};   
 
 module.exports = isCorrectPassword;

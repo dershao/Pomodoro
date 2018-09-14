@@ -7,7 +7,7 @@ const sessionCheck = (req, res, next) => {
 
     //session could be made expresss-session or passport
     if (req.session.user || req.user) {
-        res.redirect('/home');
+        res.redirect("/home");
     } else {
         next();
     }
