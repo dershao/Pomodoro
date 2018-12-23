@@ -19,7 +19,7 @@ $(document).ready(function() {
   setup();
 
   $('form').on('submit', function() {
-
+      $('form :submit')[0].disabled = true; 
       var item = $('#task-input');
       var count = $('#time-input');
       var task = {item: item.val(), count: count.val()};
